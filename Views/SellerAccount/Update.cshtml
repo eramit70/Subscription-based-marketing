@@ -1,0 +1,63 @@
+﻿@model Subscription_based_marketing.DTO.SellerDto
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_SellerLayout.cshtml";
+}
+
+<h1>Update</h1>
+
+<h4>SellerAccount</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SellerID" />
+            <input type="hidden" asp-for="SellerLastLoginDate" />
+            <input type="hidden" asp-for="SellerAccountCreationDate" />
+            <input type="hidden" asp-for="SellerPassword" />
+            <div class="form-group">
+                <label asp-for="SellerUserName" class="control-label"></label>
+                <input asp-for="SellerUserName" class="form-control" readonly />
+                <span asp-validation-for="SellerUserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerEmail" class="control-label"></label>
+                <input asp-for="SellerEmail" class="form-control" readonly />
+                <span asp-validation-for="SellerEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerName" class="control-label"></label>
+                <input asp-for="SellerName" class="form-control" />
+                <span asp-validation-for="SellerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerDescription" class="control-label"></label>
+                <input asp-for="SellerDescription" class="form-control" type="text" />
+                <span asp-validation-for="SellerDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerPhoneNumber" class="control-label"></label>
+                <input asp-for="SellerPhoneNumber" class="form-control" type="number"   />
+              
+                <span asp-validation-for="SellerPhoneNumber" id="message" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-outline-success" /> | <a asp-action="Details" class="btn btn-outline-secondary">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Subscription_based_marketing.DTO.SellerDto>
+
+@{
+    ViewData["Title"] = "SellerAccountList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>SellerAccountList</h1>
+
+@if (TempData["DeleteError"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>@TempData["DeleteError"]</strong><br /> because this account have relation with any Service
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (TempData["NoService"] != null)
+{
+    <div class="alert alert-denger alert-dismissible fade show" role="alert">
+        <strong>@TempData["NoService"]</strong><br /> The seller doesn't upload own service
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.SellerUserName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.SellerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SellerEmail)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.SellerPhoneNumber)
+            </th>
+
+       
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellerUserName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellerEmail)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SellerPhoneNumber)
+                </td>
+
+               
+                <td>
+                  
+                    <a asp-action="UploadedServicesBySeller" asp-route-sellerId="@item.SellerID" class="btn btn-outline-warning">View Services</a> 
+                    |  <a asp-action="DeleteSellerAccount" asp-route-sellerId="@item.SellerID" class="btn btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

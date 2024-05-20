@@ -1,0 +1,63 @@
+﻿@using Subscription_based_marketing.Enums
+@model Subscription_based_marketing.DTO.ServiceDto
+@{
+    ViewData["Title"] = "PaymentSuccess";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>PaymentSuccess</h1>
+
+<h4>ServiceDetail</h4>
+<hr />
+<div class="row">
+
+    <div class="col-md-4">
+        <center>
+        <form asp-action="PaymentSuccess">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ServiceID" />
+            <input type="hidden" asp-for="SellerID" readonly />
+            <input type="hidden" asp-for="ServiceCreationDate" />
+
+            <div class="form-group">
+                <label asp-for="ServiceTitle" class="control-label"></label>
+                <input asp-for="ServiceTitle" class="form-control" readonly />
+                <span asp-validation-for="ServiceTitle" class="text-danger"></span>
+            </div>
+          
+            <div class="form-group">
+                <label asp-for="ServiceDuration" class="control-label"></label>
+                <input asp-for="ServiceDuration" class="form-control" readonly />
+
+                <span asp-validation-for="ServiceDuration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceFeature" class="control-label"></label>
+                <input asp-for="ServiceFeature" class="form-control" readonly />
+                <span asp-validation-for="ServiceFeature" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceTermsCondition" class="control-label"></label>
+                <input asp-for="ServiceTermsCondition" class="form-control" readonly />
+                <span asp-validation-for="ServiceTermsCondition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServicePrice" class="control-label"></label>
+                <input asp-for="ServicePrice" class="form-control" readonly />
+                <span asp-validation-for="ServicePrice" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ServiceLevel" class="control-label"></label>
+                <input asp-for="ServiceLevel" class="form-control" readonly  />
+                <span asp-validation-for="ServiceLevel" class="text-danger"></span>
+            </div>
+          
+           <center> <div class="form-group">
+                <input type="submit" value="Make Payment Successfully !" class="btn btn-outline-success" />
+            </div>
+            </center>
+        </form>
+        </center>
+    </div>
+</div>

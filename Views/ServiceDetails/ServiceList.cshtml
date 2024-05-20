@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Subscription_based_marketing.DTO.ServiceDto>
+
+@{
+    ViewData["Title"] = "ServiceList";
+    Layout = "~/Views/Shared/_SellerLayout.cshtml";
+}
+
+<h1>ServiceList</h1>
+
+@if (TempData["DeleteError"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>@TempData["DeleteError"]</strong><br /> because this Serivce have relation with User or Seller
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceTitle)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceDuration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceFeature)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServicePrice)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceIsPublish)
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceTitle)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceDuration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceFeature)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServicePrice)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceIsPublish)
+                </td>
+                <td>
+                    <a asp-action="UpdateService" asp-route-id="@item.ServiceID" class="btn btn-outline-warning">Update</a> |
+                    <a asp-action="DetailService" asp-route-id="@item.ServiceID" class="btn btn-outline-primary">View</a> |
+                    <a asp-action="DeleteService" asp-route-id="@item.ServiceID" class="btn btn-outline-danger">Delete</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

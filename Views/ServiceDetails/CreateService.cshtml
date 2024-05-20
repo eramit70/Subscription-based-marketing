@@ -1,0 +1,72 @@
+﻿@using Subscription_based_marketing.Enums
+@model Subscription_based_marketing.DTO.ServiceDto
+
+@{
+    ViewData["Title"] = "CreateService";
+    Layout = "~/Views/Shared/_SellerLayout.cshtml";
+}
+
+<h1>CreateService</h1>
+
+<h4>ServiceDetail</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateService">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ServiceTitle" class="control-label"></label>
+                <input asp-for="ServiceTitle" class="form-control" />
+                <span asp-validation-for="ServiceTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceDescription" class="control-label"></label>
+                <input asp-for="ServiceDescription" class="form-control" type="text" />
+                <span asp-validation-for="ServiceDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceDuration" class="control-label"></label>
+                <select asp-for="ServiceDuration" class="form-select" asp-items="Html.GetEnumSelectList<Duration>()">
+                    <option selected="selected" value="">Select Duration Time</option>
+                </select>
+                <span asp-validation-for="ServiceDuration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceFeature" class="control-label"></label>
+                <input asp-for="ServiceFeature" class="form-control" type="text" />
+                <span asp-validation-for="ServiceFeature" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceTermsCondition" class="control-label"></label>
+                <input asp-for="ServiceTermsCondition" class="form-control" />
+                <span asp-validation-for="ServiceTermsCondition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServicePrice" class="control-label"></label>
+                <input asp-for="ServicePrice" class="form-control" type="number" />
+                <span asp-validation-for="ServicePrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceLevel" class="control-label"></label>
+                <select asp-for="ServiceLevel" class="form-select" asp-items="Html.GetEnumSelectList<ServiceLevel>()">
+                    <option selected="selected" value="">Select Level</option>
+                </select>
+                <span asp-validation-for="ServiceLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ServiceIsPublish" /> @Html.DisplayNameFor(model => model.ServiceIsPublish)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" /> |  <a asp-action="ServiceList" asp-controller="ServiceDetails" class="btn btn-outline-secondary">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+   
+</div>
+

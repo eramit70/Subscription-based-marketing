@@ -1,0 +1,53 @@
+﻿@model Subscription_based_marketing.DTO.SellerDto
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<h4>SellerAccount</h4>
+@if (TempData["LoginError"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>@TempData["LoginError"]</strong><br /> You should check in on some of those fields below.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (TempData["Registered"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>@TempData["Registered"]</strong><br /> Your Have Create Successfully Account now you can Login Here
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SellerUserName" class="control-label"></label>
+                <input asp-for="SellerUserName" class="form-control" />
+                <span asp-validation-for="SellerUserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerPassword" class="control-label"></label>
+                <input asp-for="SellerPassword" class="form-control" type="password" />
+                <span asp-validation-for="SellerPassword" class="text-danger"></span>
+                <br />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+ 
+<div>
+    <strong> If You Don't Have Account  <a asp-action="Register" > Click Here </a></strong>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Subscription_based_marketing.DTO.ServiceDto>
+@{
+    ViewData["Title"] = "UploadedServicesBySeller";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Uploaded Services By Seller</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceTitle)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceDuration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceFeature)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServicePrice)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceIsPublish)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceTitle)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceDuration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceFeature)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServicePrice)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceIsPublish)
+                </td>
+               
+            </tr>
+        }
+
+    </tbody>
+</table>
+

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Subscription_based_marketing.DTO.UserDto>
+
+@{
+    ViewData["Title"] = "UserList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["DeleteError"]!= null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>@TempData["DeleteError"]</strong><br /> because Currently This Account Have Subscription
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (TempData["NoService"]!= null)
+{
+    <div class="alert alert-denger alert-dismissible fade show" role="alert">
+        <strong>@TempData["NoService"]</strong><br /> this user doesn't have any Subscription
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UserEmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.SubscriptionStatus)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserEmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.SubscriptionStatus)
+                </th>
+
+                <td>
+                    @if (item.SubscriptionStatus == true)
+                    {
+                        <a asp-action="UsedServiceByUser" asp-route-userId="@item.UserID" class="btn btn-outline-warning">View Service</a>
+                    }
+                    else
+                    {
+                        <a class="btn">  No service   </a>
+
+                    }
+                    |  <a asp-route-userId="@item.UserID" asp-action="DeleteUserAccount" class="btn btn-outline-danger">Delete</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

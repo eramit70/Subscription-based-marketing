@@ -1,0 +1,65 @@
+﻿@model Subscription_based_marketing.DTO.SellerDto
+
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+<h4>SellerAccount</h4>
+<hr />
+@if (TempData["duplicate"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>@TempData["duplicate"]</strong><br /> you should Go to Login Directly.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+else if (TempData["duplicateAccount"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>@TempData["duplicateAccount"]</strong><br /> using this name already create Account into another Account Services
+        please try different UserName for creating Account
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SellerUserName" class="control-label"></label>
+                <input asp-for="SellerUserName" class="form-control" />
+                <span asp-validation-for="SellerUserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerName" class="control-label"></label>
+                <input asp-for="SellerName" class="form-control" />
+                <span asp-validation-for="SellerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerEmail" class="control-label"></label>
+                <input asp-for="SellerEmail" class="form-control" type="email" />
+                <span asp-validation-for="SellerEmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SellerPassword" class="control-label"></label>
+                <input asp-for="SellerPassword" class="form-control" type="password" />
+                <span asp-validation-for="SellerPassword" class="text-danger"></span>
+                <br />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-outline-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <strong> If you Already Registered <a asp-action="Login">Click Here</a> </strong>
+</div>
+
