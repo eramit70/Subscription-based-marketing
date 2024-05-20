@@ -12,11 +12,12 @@ namespace Subscription_based_marketing.Controllers
 {
     public class SellerAccountController : Controller
     {
+        #region Dependency Injection
+
         private readonly ISellerAccountService _sellerService;
         private readonly IServiceForAllAccount _serviceForAll;
 
         private readonly IMapper _mapper;
-
         public SellerAccountController(
             ISellerAccountService sellerService,
             IServiceForAllAccount serviceForAll,
@@ -28,11 +29,14 @@ namespace Subscription_based_marketing.Controllers
         }
 
 
+        #endregion
 
         public IActionResult Login()
         {
             return View();
         }
+
+        #region Login / Register
 
         [HttpPost]
         public IActionResult Login(SellerDto sellerDto)
@@ -93,6 +97,9 @@ namespace Subscription_based_marketing.Controllers
             }
         }
 
+        #endregion
+
+        #region Update 
         public async Task<IActionResult> Update(Guid ID)
         {
             var sellerAccount = await _sellerService.GetSellerAccountByIDAsync(ID);
@@ -111,6 +118,10 @@ namespace Subscription_based_marketing.Controllers
 
         }
 
+        #endregion
+
+
+        #region Details
         public async Task<IActionResult> Details()
         {
             if (HttpContext.Session.GetString("SellerUserName") != null)
@@ -152,5 +163,7 @@ namespace Subscription_based_marketing.Controllers
 
 
         }
+
+        #endregion
     }
 }
