@@ -38,29 +38,21 @@ public class Program
 
 
 
-        // Register URF 
+        // Register URF Inbuild Service
         builder.Services.AddScoped<DbContext, SubscriptionDbContext>();
-
-        //builder.Services.AddScoped(typeof(ITrackableRepository<>), typeof(TrackableRepository<AdminstratorAccount>));
-        //builder.Services.AddScoped(typeof(ITrackableRepository<>), typeof(TrackableRepository<SellerAccount>));
-        //builder.Services.AddScoped(typeof(ITrackableRepository<>), typeof(TrackableRepository<UserAccount>));
-        //builder.Services.AddScoped(typeof(ITrackableRepository<>), typeof(TrackableRepository<ServiceDetail>));
-        //builder.Services.AddScoped(typeof(ITrackableRepository<>), typeof(TrackableRepository<SubscriptionDetails>));
-        //builder.Services.AddScoped(typeof(ITrackableRepository<>), typeof(TrackableRepository<>));
         builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        // Register services
+        // Register URF Service
         builder.Services.AddScoped<ITrackableRepository<UserAccount>, TrackableRepository<UserAccount>>();
         builder.Services.AddScoped<ITrackableRepository<AdminstratorAccount>, TrackableRepository<AdminstratorAccount>>();
         builder.Services.AddScoped<ITrackableRepository<SellerAccount>, TrackableRepository<SellerAccount>>();
         builder.Services.AddScoped<ITrackableRepository<ServiceDetail>, TrackableRepository<ServiceDetail>>();
         builder.Services.AddScoped<ITrackableRepository<SubscriptionDetails>, TrackableRepository<SubscriptionDetails>>();
        
-
+        // Register Services
         builder.Services.AddScoped<IUserAccountService, UserAccountService>();
         builder.Services.AddScoped<IAdminService, AdminService>();
-        
         builder.Services.AddScoped<ISellerAccountService, SellerAccountService>();
         builder.Services.AddScoped<IServiceForAllAccount, ServiceForAllAccount>();
         builder.Services.AddScoped<IServiceListService, ServiceListService>();
@@ -69,9 +61,6 @@ public class Program
         // Add session and memory cache
         builder.Services.AddSession();
         builder.Services.AddMemoryCache();
-
-        
-
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -91,8 +80,9 @@ public class Program
         
         app.UseRouting();
         app.UseSession();
-
+        
         app.UseAuthorization();
+       
 
         app.MapControllerRoute(
             name: "default",
@@ -101,15 +91,5 @@ public class Program
         app.Run();
     }
 
-    /* public static void RegisterTypes(IUnityContainer container)
-      {
-
-          container.RegisterType<DbContext, SubscriptionDbContext>(new PerRequestLifetimeManager());
-          container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager());
-          container.RegisterType<IUnitOfWork, UnitOfWork>();
-          container.RegisterType<IRepository<AdminstratorAccount>, Repository<AdminstratorAccount>>();
-          container.RegisterType<IRepository<SellerAccount>, Repository<SellerAccount>>();
-          container.RegisterType<IRepository<UserAccount>, Repository<UserAccount>>();
-          container.RegisterType<IRepository<SubscriptionDetails>, Repository<SubscriptionDetails>>();
-      }*/
+    
 }
