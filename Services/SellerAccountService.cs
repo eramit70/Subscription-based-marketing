@@ -21,7 +21,7 @@ namespace Subscription_based_marketing.Services
 
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        //   private readonly IHttpContextAccessor _httpContextAccessor;
+       
 
         public SellerAccountService(ITrackableRepository<SellerAccount> repository,
             IMapper mapper,

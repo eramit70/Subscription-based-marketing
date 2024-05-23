@@ -40,7 +40,7 @@ namespace Subscription_based_marketing.Services
 
         public async Task AddAdminAccountAsync(AdminDto admin)
         {
-            var adminEntity = _mapper.Map<AdminstratorAccount>(admin);
+            AdminstratorAccount adminEntity = _mapper.Map<AdminstratorAccount>(admin);
             Repository.Insert(adminEntity);
             await SaveAsync();
         }

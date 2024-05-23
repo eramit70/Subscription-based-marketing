@@ -12,11 +12,11 @@ namespace Subscription_based_marketing.Models.Services
         public Guid ServiceID { get; set; }
         public virtual SellerAccount seller { get; set; }
 
-        [Required]
+     
         [ForeignKey("SellerID")]
         public Guid SellerID { get; set; }
 
-        [Required]
+
         public string ServiceTitle { get; set; }
 
 
