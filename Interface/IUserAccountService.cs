@@ -18,6 +18,7 @@ namespace Subscription_based_marketing.Interface
         Task UpdateLastLoginDateByUserIdAsync(Guid userId);
         Task DeleteUserAccountAsync(UserDto userDto);
         Task<List<UserDto>> GetUserAccountListAsync();
+        Task<bool> CheckDuplicateEmailAsync(string email);
     }
 
 }

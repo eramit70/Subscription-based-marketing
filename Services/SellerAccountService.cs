@@ -21,7 +21,7 @@ namespace Subscription_based_marketing.Services
 
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-       
+
 
         public SellerAccountService(ITrackableRepository<SellerAccount> repository,
             IMapper mapper,
@@ -126,6 +126,17 @@ namespace Subscription_based_marketing.Services
             var sellerAccount = _mapper.Map<SellerAccount>(sellerDto);
             Repository.Delete(sellerAccount);
             await SaveAsync();
+        }
+
+        public async Task<bool> CheckDuplicateEmailAsync(string email)
+        {
+            var sellerAccount = await Repository.Queryable().Where(item => item.SellerEmail == email).FirstOrDefaultAsync();
+
+            if (sellerAccount != null)
+            {
+                return true;
+            }
+            else return false;
         }
     }
 }

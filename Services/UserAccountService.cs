@@ -78,7 +78,7 @@ namespace Subscription_based_marketing.Services
         public async Task DeleteUserAccountAsync(UserDto user)
         {
             var userEntity = _mapper.Map<UserAccount>(user);
-             Repository.Delete(userEntity);
+            Repository.Delete(userEntity);
             await SaveAsync();
         }
         public async Task<bool> UserLoginAsync(UserDto userDto)
@@ -150,5 +150,15 @@ namespace Subscription_based_marketing.Services
             }
         }
 
+        public async Task<bool> CheckDuplicateEmailAsync(string email)
+        {
+            var userAccount = await Repository.Queryable().Where(item => item.UserEmailAddress == email).FirstOrDefaultAsync();
+            if (userAccount != null)
+            {
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }

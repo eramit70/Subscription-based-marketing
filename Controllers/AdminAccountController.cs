@@ -36,7 +36,6 @@ namespace Subscription_based_marketing.Controllers
         #endregion
 
 
-
         #region Admin Action 
         public IActionResult Index()
         {
@@ -74,32 +73,45 @@ namespace Subscription_based_marketing.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool allAccount = await _allacountService.CheckDuplicateUserNameInAllAccountByUserNameAsync(admin.AdminUserName);
-                bool duplicateAdminit = await _adminService.CheckDuplicateAdminAsync(admin.AdminUserName);
+                bool duplicateEmailGlobally = await _allacountService.CheckDuplicateEmailAllAccountByEmailAsync(admin.AdminEmail);
+                bool duplicateUserNameGlobaly = await _allacountService.CheckDuplicateUserNameInAllAccountByUserNameAsync(admin.AdminUserName);
+                bool duplicateUserName = await _adminService.CheckDuplicateAdminAsync(admin.AdminUserName);
+                bool duplicateEmailAddress = await _adminService.CheckDuplicateAdminAsync(admin.AdminEmail);
 
-                if (!duplicateAdminit)
+                if (!duplicateEmailAddress)
                 {
-                    if (allAccount)
+                    if (!duplicateUserName)
                     {
-                        Guid ID = Guid.NewGuid();
-                        admin.AdminId = ID;
-                        admin.AdminAccountCreationDate = DateTime.Now;
-                        admin.AdminLastLoginDate = DateTime.Now;
+                        if (duplicateUserNameGlobaly)
+                        {
+                            if (duplicateEmailGlobally)
+                            {
+                                 await _adminService.AddAdminAccountAsync(admin);
+                                TempData["Registered"] = "Congratulations! " + admin.FirstName.ToUpper() + " your account has been registered.";
 
-                        await _adminService.AddAdminAccountAsync(admin);
-                        TempData["Registered"] = "Congratulations! " + admin.FirstName.ToUpper() + " your account has been registered.";
-
-                        return RedirectToAction("Login");
+                                return RedirectToAction("Login");
+                            }
+                            else
+                            {
+                                TempData["duplicateAccount"] = "Using " + admin.AdminEmail + "  Email Address Already Registered in other Service ";
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            TempData["duplicateAccount"] = "Using " + admin.AdminUserName.ToUpper() + "  UserName Already Create Account in other Service ";
+                            return View();
+                        }
                     }
                     else
                     {
-                        TempData["duplicateAccount"] = "Using " + admin.AdminUserName.ToUpper() + "  UserName Already Create Account in other Service ";
+                        TempData["duplicate"] = admin.AdminUserName.ToUpper() + " Already Registered ";
                         return View();
                     }
                 }
                 else
                 {
-                    TempData["duplicate"] = admin.AdminUserName.ToUpper() + " Already Registered ";
+                    TempData["duplicate"] = admin.AdminEmail + " Already Registered ";
                     return View();
                 }
             }
@@ -121,9 +133,7 @@ namespace Subscription_based_marketing.Controllers
             return RedirectToAction("Login", "AdminAccount");
         }
 
-        #endregion
-      
-
+        #endregion  
 
         #region Service Action
         public async Task<IActionResult> ServiceList()
@@ -143,7 +153,6 @@ namespace Subscription_based_marketing.Controllers
 
         #endregion
 
-      
 
         #region Seller Account Action
         public async Task<IActionResult> SellerAccountList()
@@ -200,7 +209,6 @@ namespace Subscription_based_marketing.Controllers
 
         #endregion
 
-      
 
         #region User Account Action
 
@@ -263,6 +271,6 @@ namespace Subscription_based_marketing.Controllers
 
         #endregion
 
-     
+
     }
 }

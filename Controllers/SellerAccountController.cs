@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Subscription_based_marketing.DTO;
 using Subscription_based_marketing.Interface;
+using Subscription_based_marketing.Services;
 
 namespace Subscription_based_marketing.Controllers
 {
@@ -62,32 +63,47 @@ namespace Subscription_based_marketing.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(SellerDto sellerDto)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                bool checkAllAccount = await _serviceForAll.CheckDuplicateUserNameInAllAccountByUserNameAsync(sellerDto.SellerUserName);
+                bool duplicateEmailGlobally = await _serviceForAll.CheckDuplicateEmailAllAccountByEmailAsync(sellerDto.SellerEmail);
+                bool duplicateUserNameGlobaly = await _serviceForAll.CheckDuplicateUserNameInAllAccountByUserNameAsync(sellerDto.SellerUserName);
+                bool duplicateUserName = await _sellerService.CheckDuplicateSellerAsync(sellerDto.SellerUserName);
+                bool duplicateEmailAddress = await _sellerService.CheckDuplicateEmailAsync(sellerDto.SellerEmail);
 
-
-
-                bool duplicate = await _sellerService.CheckDuplicateSellerAsync(sellerDto.SellerUserName);
-                if (!duplicate)
+                if (!duplicateEmailAddress)
                 {
-                    if (checkAllAccount)
+                    if (!duplicateUserName)
                     {
+                        if (duplicateUserNameGlobaly)
+                        {
+                            if (duplicateEmailGlobally)
+                            {
+                                await _sellerService.AddSellerAccountAsync(sellerDto);
+                                TempData["Registered"] = "Congratulations! " + sellerDto.SellerName.ToUpper() + " your account has been registered.";
 
-                        await _sellerService.AddSellerAccountAsync(sellerDto);
-                        TempData["Registered"] = "Congratulations! " + sellerDto.SellerName.ToUpper() + " your account has been registered.";
-
-                        return RedirectToAction("Login", "SellerAccount");
+                                return RedirectToAction("Login");
+                            }
+                            else
+                            {
+                                TempData["duplicateAccount"] = "Using " + sellerDto.SellerEmail + "  Email Address Already Registered in other Service ";
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            TempData["duplicateAccount"] = "Using " + sellerDto.SellerUserName.ToUpper() + "  UserName Already Create Account in other Service ";
+                            return View();
+                        }
                     }
                     else
                     {
-                        TempData["duplicateAccount"] ="Using "+ sellerDto.SellerUserName.ToUpper() + " UserName Already Create Account in other Service ";
+                        TempData["duplicate"] = sellerDto.SellerUserName.ToUpper() + " Already Registered ";
                         return View();
                     }
                 }
                 else
                 {
-                    TempData["duplicate"] = sellerDto.SellerName.ToUpper() + " Is Already Registered";
+                    TempData["duplicate"] = sellerDto.SellerEmail + " Already Registered ";
                     return View();
                 }
             }
@@ -96,6 +112,7 @@ namespace Subscription_based_marketing.Controllers
                 return View(sellerDto);
             }
         }
+
 
         #endregion
 

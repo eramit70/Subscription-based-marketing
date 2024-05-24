@@ -17,14 +17,12 @@ namespace Subscription_based_marketing.Services
     {
 
         private readonly IMapper _mapper;
-        private readonly ISellerAccountService _sellerAccountService;
-        private readonly IUserAccountService _userAccountService;
         private readonly IUnitOfWork _unitOfWork;
-        public AdminService(ITrackableRepository<AdminstratorAccount> repository, IMapper mapper,
 
-            ISellerAccountService sellerAccountService,
-            IUnitOfWork unitOfWork,
-            IUserAccountService userAccountService
+        public AdminService(
+            ITrackableRepository<AdminstratorAccount> repository,
+            IMapper mapper,
+            IUnitOfWork unitOfWork
 
             ) : base(repository)
         {
@@ -32,14 +30,16 @@ namespace Subscription_based_marketing.Services
             _mapper = mapper;
             _unitOfWork = unitOfWork;
 
-            _sellerAccountService = sellerAccountService;
-            _userAccountService = userAccountService;
         }
-
 
 
         public async Task AddAdminAccountAsync(AdminDto admin)
         {
+            Guid ID = Guid.NewGuid();
+            admin.AdminId = ID;
+            admin.AdminAccountCreationDate = DateTime.Now;
+            admin.AdminLastLoginDate = DateTime.Now;
+
             AdminstratorAccount adminEntity = _mapper.Map<AdminstratorAccount>(admin);
             Repository.Insert(adminEntity);
             await SaveAsync();
@@ -112,6 +112,16 @@ namespace Subscription_based_marketing.Services
 
             Repository.Update(adminAccount);
             await SaveAsync();
+        }
+
+        public async Task<bool> CheckDuplicateEmailAsync(string email)
+        {
+            var adminAccount = await Repository.Queryable().Where(item => item.AdminEmail == email).FirstOrDefaultAsync();
+            if (adminAccount != null)
+            {
+                return true;
+            }
+            else return false;
         }
     }
 }

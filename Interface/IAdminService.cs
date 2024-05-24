@@ -22,6 +22,7 @@ namespace Subscription_based_marketing.Interface
         Task<bool> CheckDuplicateAdminAsync(string AdminuserName);
         Task<Guid> GetAdminIDByUserNameAsync(string adminUserName);
         Task UpdateLastLoginDateByUserIdAsync(Guid adminId);
+        Task<bool> CheckDuplicateEmailAsync(string email);
 
     }
 

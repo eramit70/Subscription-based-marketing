@@ -37,28 +37,45 @@ namespace Subscription_based_marketing.Controllers
             {
                 bool checkAllAccount = await _serviceForAll.CheckDuplicateUserNameInAllAccountByUserNameAsync(userDto.UserName);
                 bool duplicateUserit = await _userService.CheckDuplicateUserAsync(userDto.UserName);
+                bool duplicateEmail = await _userService.CheckDuplicateEmailAsync(userDto.UserEmailAddress);
+                bool duplicateEmailGlobaly = await _serviceForAll.CheckDuplicateEmailAllAccountByEmailAsync(userDto.UserEmailAddress);
                 if (!duplicateUserit)
                 {
-                    if (checkAllAccount)
+                    if (!duplicateEmail)
                     {
-                        await _userService.AddUserAccountAsync(userDto);
-                        TempData["Registered"] = "Congrats! " + userDto.FirstName;
-                        HttpContext.Session.SetString("UserLogin", userDto.UserName);
+                        if (checkAllAccount)
+                        {
+                            if (duplicateEmailGlobaly)
+                            {
+                                await _userService.AddUserAccountAsync(userDto);
+                                TempData["Registered"] = "Congrats! " + userDto.FirstName;
+                                HttpContext.Session.SetString("UserLogin", userDto.UserName);
 
-                        return RedirectToAction("Login", "UserAccount");
+                                return RedirectToAction("Login", "UserAccount");
+                            }
+                            else
+                            {
+                                TempData["duplicateAccount"] = "Using " + userDto.UserEmailAddress + " Email Address Already Create Account in other Service ";
+                                return View();
+                            }
+                        }
+                        else
+                        {
+                            TempData["duplicateAccount"] = "Using " + userDto.UserName.ToUpper() + " UserName Already Create Account in other Service ";
+                            return View();
+                        }
                     }
                     else
                     {
-                        TempData["duplicateAccount"] = "Using "+userDto.UserName.ToUpper() + " UserName Already Create Account in other Service ";
+                        TempData["duplicate"] = userDto.UserEmailAddress + " Already Registered ";
                         return View();
                     }
-                    }
-                    else
-                    {
-                        TempData["duplicate"] = userDto.UserName.ToUpper() + " Already Registered ";
-                        return View();
-                    }
-
+                }
+                else
+                {
+                    TempData["duplicate"] = userDto.UserName.ToUpper() + " Already Registered ";
+                    return View();
+                }
                 }
 
                 return View(userDto);

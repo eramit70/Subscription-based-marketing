@@ -18,6 +18,21 @@ namespace Subscription_based_marketing.Services
             _adminService = adminService;
 
         }
+
+        public async Task<bool> CheckDuplicateEmailAllAccountByEmailAsync(string email)
+        {
+            bool user = await _userAccountService.CheckDuplicateEmailAsync(email);
+            bool seller = await _sellerAccountService.CheckDuplicateEmailAsync(email);
+            bool admin = await _adminService.CheckDuplicateEmailAsync(email);
+
+            if (admin == true || user == true || seller == true)
+            {
+                return false;
+            }
+            return true;
+
+        }
+
         public async Task<bool> CheckDuplicateUserNameInAllAccountByUserNameAsync(string userName)
         {
          bool admin =   await _adminService.CheckDuplicateAdminAsync(userName);
