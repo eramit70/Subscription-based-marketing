@@ -59,6 +59,7 @@ namespace Subscription_based_marketing.Services
 
         public async Task UserUpdateAsync(UserDto userDto)
         {
+           
             var userAccount = _mapper.Map<UserAccount>(userDto);
 
             _mapper.Map(userDto, userAccount);
@@ -97,9 +98,6 @@ namespace Subscription_based_marketing.Services
                 Where(item => item.UserID == Id).FirstOrDefaultAsync();
             return _mapper.Map<UserDto>(userAccount);
         }
-
-
-
         public async Task<Guid> GetIDByUserNameAsync(string userName)
         {
             var user = await Repository.Queryable().
@@ -136,7 +134,6 @@ namespace Subscription_based_marketing.Services
             Repository.Update(userAccount);
             await SaveAsync();
         }
-
 
         public async Task SetTrueUserSubscriptionAsync(Guid ID)
         {

@@ -4,7 +4,7 @@ using Subscription_based_marketing.Interface;
 
 namespace Subscription_based_marketing.Controllers
 {
-
+ 
     public class AdminAccountController : Controller
     {
         #region Service Inject
@@ -37,10 +37,12 @@ namespace Subscription_based_marketing.Controllers
 
 
         #region Admin Action 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -63,6 +65,7 @@ namespace Subscription_based_marketing.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -121,6 +124,7 @@ namespace Subscription_based_marketing.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> AdminLogout()
         {
 
@@ -136,6 +140,7 @@ namespace Subscription_based_marketing.Controllers
         #endregion  
 
         #region Service Action
+        [HttpGet]
         public async Task<IActionResult> ServiceList()
         {
             if (HttpContext.Session.GetString("AdminLogin") != null)
@@ -155,6 +160,7 @@ namespace Subscription_based_marketing.Controllers
 
 
         #region Seller Account Action
+        [HttpGet]
         public async Task<IActionResult> SellerAccountList()
         {
             if (HttpContext.Session.GetString("AdminLogin") != null)
@@ -169,6 +175,7 @@ namespace Subscription_based_marketing.Controllers
                 return RedirectToAction("Login", "AdminAccount");
             }
         }
+        [HttpGet]
         public async Task<IActionResult> DeleteSellerAccount(Guid sellerId)
         {
             var sellerDto = await _sellerService.GetSellerAccountByIDAsync(sellerId);
@@ -190,6 +197,7 @@ namespace Subscription_based_marketing.Controllers
         }
 
 
+        [HttpGet]
         public async Task<IActionResult> UploadedServicesBySeller(Guid sellerId)
         {
             var seller = await _sellerService.GetSellerAccountByIDAsync(sellerId);
@@ -212,6 +220,7 @@ namespace Subscription_based_marketing.Controllers
 
         #region User Account Action
 
+        [HttpGet]
         public async Task<IActionResult> UsedServiceByUser(Guid userId)
         {
             var user = await _userAccountService.GetUserByIdAsync(userId);
@@ -229,6 +238,7 @@ namespace Subscription_based_marketing.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> UserList()
         {
             if (HttpContext.Session.GetString("AdminLogin") != null)
@@ -246,6 +256,7 @@ namespace Subscription_based_marketing.Controllers
 
 
 
+        [HttpGet]
         public async Task<IActionResult> DeleteUserAccount(Guid userId)
         {
             UserDto userDto = await _userAccountService.GetUserByIdAsync(userId);

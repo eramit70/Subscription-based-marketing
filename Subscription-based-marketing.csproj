@@ -22,7 +22,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGenerators.Mvc" Version="8.0.2" />
-    <PackageReference Include="ServiceStack.Interfaces" Version="8.2.2" />
     <PackageReference Include="URF.Core.Abstractions" Version="7.0.0" />
     <PackageReference Include="URF.Core.Abstractions.Services" Version="7.0.0" />
     <PackageReference Include="URF.Core.Abstractions.Trackable" Version="7.0.0" />

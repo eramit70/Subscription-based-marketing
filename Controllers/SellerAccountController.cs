@@ -11,6 +11,7 @@ using Subscription_based_marketing.Services;
 
 namespace Subscription_based_marketing.Controllers
 {
+   
     public class SellerAccountController : Controller
     {
         #region Dependency Injection
@@ -32,12 +33,13 @@ namespace Subscription_based_marketing.Controllers
 
         #endregion
 
+        #region Login / Register
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        #region Login / Register
 
         [HttpPost]
         public IActionResult Login(SellerDto sellerDto)
@@ -55,7 +57,7 @@ namespace Subscription_based_marketing.Controllers
                 return View();
             }
         }
-
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -117,6 +119,7 @@ namespace Subscription_based_marketing.Controllers
         #endregion
 
         #region Update 
+        [HttpGet]
         public async Task<IActionResult> Update(Guid ID)
         {
             var sellerAccount = await _sellerService.GetSellerAccountByIDAsync(ID);
@@ -139,6 +142,7 @@ namespace Subscription_based_marketing.Controllers
 
 
         #region Details
+        [HttpGet]
         public async Task<IActionResult> Details()
         {
             if (HttpContext.Session.GetString("SellerUserName") != null)
@@ -168,6 +172,7 @@ namespace Subscription_based_marketing.Controllers
               return RedirectToActionPermanent("Login", "SellerAccount");
           }*/
 
+        [HttpGet]
         public async Task<IActionResult> SellerLogout()
         {
             var sellerUserName = HttpContext.Session.GetString("SellerUserName");

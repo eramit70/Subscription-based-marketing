@@ -49,14 +49,14 @@ public class Program
         builder.Services.AddScoped<ITrackableRepository<SellerAccount>, TrackableRepository<SellerAccount>>();
         builder.Services.AddScoped<ITrackableRepository<ServiceDetail>, TrackableRepository<ServiceDetail>>();
         builder.Services.AddScoped<ITrackableRepository<SubscriptionDetails>, TrackableRepository<SubscriptionDetails>>();
-       
+
         // Register Services
         builder.Services.AddScoped<IUserAccountService, UserAccountService>();
         builder.Services.AddScoped<IAdminService, AdminService>();
         builder.Services.AddScoped<ISellerAccountService, SellerAccountService>();
         builder.Services.AddScoped<IServiceForAllAccount, ServiceForAllAccount>();
         builder.Services.AddScoped<IServiceListService, ServiceListService>();
-       builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+        builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 
         // Add session and memory cache
         builder.Services.AddSession();
@@ -77,12 +77,12 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        
+
         app.UseRouting();
         app.UseSession();
-        
+
         app.UseAuthorization();
-       
+
 
         app.MapControllerRoute(
             name: "default",
@@ -91,5 +91,5 @@ public class Program
         app.Run();
     }
 
-    
+
 }

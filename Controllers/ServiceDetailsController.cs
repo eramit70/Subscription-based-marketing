@@ -5,7 +5,7 @@ using Subscription_based_marketing.Interface;
 
 namespace Subscription_based_marketing.Controllers
 {
-    public class ServiceDetailsController : Controller
+        public class ServiceDetailsController : Controller
     {
         private readonly IServiceListService _serviceList;
         private readonly ISellerAccountService _sellerService;
@@ -21,18 +21,19 @@ namespace Subscription_based_marketing.Controllers
             _sellerService = sellerAccountService;
 
         }
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
 
-
-        public async Task<IActionResult> ServiceList()
+        [HttpGet]
+        public IActionResult ServiceList()
         {
             if (HttpContext.Session.GetString("SellerUserName") != null)
             {
                 var name = HttpContext.Session.GetString("SellerUserName");
-                Guid SellerID =  _sellerService.GetSellerIDByUserNameAsync(name!).Result;
+                Guid SellerID =   _sellerService.GetSellerIDByUserNameAsync(name!).Result;
                 var serviceDtoList =  _serviceList.UseSevicesListAsync(SellerID).Result;
               
                 return View(serviceDtoList);
@@ -42,7 +43,7 @@ namespace Subscription_based_marketing.Controllers
                 return RedirectToAction("Login", "SellerAccount");
             }
         }
-
+        [HttpGet]
         public IActionResult CreateService()
         {
             if (HttpContext.Session.GetString("SellerUserName") != null)
@@ -76,6 +77,7 @@ namespace Subscription_based_marketing.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> DetailService(Guid ID)
         {
             if (HttpContext.Session.GetString("SellerUserName") != null)
@@ -91,6 +93,7 @@ namespace Subscription_based_marketing.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> UpdateService(Guid ID)
         {
             if (HttpContext.Session.GetString("SellerUserName") != null)
@@ -121,6 +124,8 @@ namespace Subscription_based_marketing.Controllers
             }
         }
 
+
+        [HttpGet]
         public async Task<IActionResult> DeleteService(Guid ID)
         {
             if (HttpContext.Session.GetString("SellerUserName") != null)

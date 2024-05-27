@@ -30,7 +30,7 @@ namespace Subscription_based_marketing.Controllers
             _subscriptionService = subscriptionService;
             _mapper = mapper;
         }
-
+        [HttpGet]
         public async Task<IActionResult> SubscriptionList()
         {
             var userLogin = HttpContext.Session.GetString("UserLogin");
@@ -45,7 +45,7 @@ namespace Subscription_based_marketing.Controllers
                 return RedirectToAction("Login", "UserAccount");
             }
         }
-
+        [HttpGet]
         public async Task<IActionResult> PaymentProcess(Guid ID)
         {
             var userLogin = HttpContext.Session.GetString("UserLogin");
@@ -60,7 +60,8 @@ namespace Subscription_based_marketing.Controllers
                 return RedirectToAction("Login", "UserAccount");
             }
         }
-        public async Task<IActionResult> NormalDashBoard(UserDto userAccount)
+        [HttpGet]
+        public IActionResult NormalDashBoard(UserDto userAccount)
         {
             var userLogin = HttpContext.Session.GetString("UserLogin");
             if (!string.IsNullOrEmpty(userLogin))
@@ -101,6 +102,7 @@ namespace Subscription_based_marketing.Controllers
                 return View(subscriptionDto);
             }*/
 
+        [HttpGet]
         public async Task<IActionResult> PaymentSuccess(Guid ID)
         {
             var userLogin = HttpContext.Session.GetString("UserLogin");
@@ -175,7 +177,7 @@ namespace Subscription_based_marketing.Controllers
         // ---------------------------------------------------Premium DashBoard Action Method----------------------------------
 
 
-
+        [HttpGet]
         public async Task<IActionResult> PremiumDashBoard(UserDto userAccount)
         {
             var userLogin = HttpContext.Session.GetString("UserLogin");
@@ -192,6 +194,7 @@ namespace Subscription_based_marketing.Controllers
                 return RedirectToAction("Login", "UserAccount");
             }
         }
+        [HttpGet]
         public async Task<IActionResult> ViewSerives()
         {
             var userLogin = HttpContext.Session.GetString("UserLogin");
@@ -216,7 +219,7 @@ namespace Subscription_based_marketing.Controllers
 
         // ---------------------------------------------------Premium Use Account Management Action Method----------------------------------
 
-
+        [HttpGet]
         public async Task<IActionResult> UserUpdate(Guid ID)
         {
             var userLogin = HttpContext.Session.GetString("UserLogin");
@@ -241,11 +244,12 @@ namespace Subscription_based_marketing.Controllers
         [HttpPost]
         public async Task<IActionResult> UserUpdate(UserDto userDto)
         {
-
+            userDto.SubscriptionStatus = true;
             await _userAccountService.UserUpdateAsync(userDto);
             return RedirectToAction("PremiumDashBoard", "UserDashboard");
 
         }
+        [HttpGet]
         public async Task<IActionResult> UserDetails()
         {
             var userLogin = HttpContext.Session.GetString("UserLogin");
